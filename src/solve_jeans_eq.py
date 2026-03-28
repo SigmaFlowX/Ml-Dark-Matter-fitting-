@@ -1,5 +1,5 @@
-from utils import rho_nfw, osmirnov_anisotropy, nu_plummer_profile, mass_nfw
-from scipy.integrate import quad, solve_ivp
+from utils import osmirnov_anisotropy, nu_plummer_profile, mass_nfw
+from scipy.integrate import solve_ivp
 from scipy.interpolate import interp1d
 import numpy as np
 import matplotlib.pyplot as plt
@@ -11,11 +11,7 @@ def dnu_plummer(r, a, m0):
     return -15 * m0 / (4 * np.pi * a**5) * r * (1 + r**2 / a**2)**(-7/2)
 
 def mass_profile(r_grid, rho_s, r_s):
-
-    M = np.array([
-        mass_nfw(r, rho_s, r_s)
-        for r in r_grid
-    ])
+    M = np.array([mass_nfw(r, rho_s, r_s) for r in r_grid])
 
     return interp1d(
         r_grid,
