@@ -12,4 +12,4 @@ def nu_plummer_profile(r, a, m0):
 
 def mass_nfw(r, rho_s, r_s): # M(<r)
     integral = lambda x: 4 *  np.pi * x**2 * rho_nfw(x, rho_s, r_s)
-    return quad(integral, 0, r)
+    return quad(integral, 0, r)[0]
