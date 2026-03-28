@@ -20,7 +20,6 @@ def mass_profile(r_grid, rho_s, r_s):
         fill_value="extrapolate"
     )
 
-
 def jeans_eq(r, sigma2, M_interp, a, m0, beta_inf, r_beta):
     nu = nu_plummer_profile(r, a, m0)
     dnu = dnu_plummer(r, a, m0)
