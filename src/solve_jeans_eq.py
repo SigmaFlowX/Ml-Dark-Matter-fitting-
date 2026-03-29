@@ -27,7 +27,7 @@ def jeans_eq(r, sigma2, M_interp, a, m0, beta_inf, r_beta):
 
     return  -G*M_interp(r)/r**2 - (2*beta/r + dnu/nu)*sigma2
 
-def solve_jeans_eq(r_grid, rho_s, r_s, a, mo, beta_inf, r_beta):
+def solve_jeans_eq(r_grid, rho_s, r_s, a, m0, beta_inf, r_beta):
     M_interp = mass_profile(r_grid, rho_s, r_s)
     sol = solve_ivp(
         fun=lambda r, y: jeans_eq(r, y, M_interp, a, m0, beta_inf, r_beta),
