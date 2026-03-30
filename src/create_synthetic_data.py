@@ -1,15 +1,26 @@
 from solve_jeans_eq import solve_jeans_eq
 import numpy as np
 from scipy.interpolate import interp1d
-
+from utils import osmirnov_anisotropy
 
 def create_data(r_grid, rho_s, r_s, a, m0, beta_inf, r_beta, n_stars):
     sigma2 = solve_jeans_eq(r_grid, rho_s, r_s, a, m0, beta_inf, r_beta)
     sigma2_funct =  interp1d(r_grid, sigma2, kind="cubic", fill_value="extrapolate")
 
     radii = generate_star_radii_analytic(n_stars, a)
+    sigmas = sigma2_funct(radii)
 
-    print(radii)
+    R = radii * np.sqrt(np.random.uniform(0, 1, len(radii)))
+
+    beta_vals = osmirnov_anisotropy(radii, beta_inf, r_beta)
+
+    sigma_los2 = sigmas * (1 - beta_vals * R ** 2 / radii ** 2)
+
+    sigma_los2 = np.clip(sigma_los2, 1e-10, None)
+
+    v_los = np.random.normal(0, np.sqrt(sigma_los2))
+
+    return radii, v_los
 
 
 def generate_star_radii_analytic(n_stars, a):
@@ -27,7 +38,7 @@ if __name__ == "__main__":
         m0 = 1e7,
         beta_inf = 0.3,
         r_beta = 2,
-        n_stars = 10
+        n_stars =5000
     )
 
 
