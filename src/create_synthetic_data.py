@@ -30,16 +30,16 @@ def generate_star_radii_analytic(n_stars, a):
 
 if __name__ == "__main__":
 
-    create_data(
+    print(create_data(
         r_grid = np.logspace(-2, 1, 120),
-        rho_s = 0.1,
-        r_s = 5,
+        rho_s = 1e7,
+        r_s = 2,
         a = 1,
-        m0 = 1e7,
+        m0 = 5e6,
         beta_inf = 0.3,
         r_beta = 2,
-        n_stars =5000
-    )
+        n_stars = 100
+    ))
 
 
 
