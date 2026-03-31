@@ -43,11 +43,12 @@ class GalaxyDataset(Dataset):
         x = self.compute_features(R, vlos)
 
         y = np.array([
-            g["rho_s"],
-            g["r_s"],
-            g["a"],
+            np.log10(g["rho_s"]),
+            np.log10(g["r_s"]),
+            np.log10(g["a"]),
             g["beta_inf"],
-            g["r_beta"]
+            np.log10(g["r_beta"])
+
         ])
 
         return (
