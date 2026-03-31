@@ -1,6 +1,7 @@
 import numpy as np
 import torch
 from torch.utils.data import Dataset
+import torch.nn as nn
 
 class GalaxyDataset(Dataset):
 
@@ -53,3 +54,20 @@ class GalaxyDataset(Dataset):
             torch.tensor(x, dtype=torch.float32),
             torch.tensor(y, dtype=torch.float32)
         )
+
+class SimpleModel(nn.Module):
+
+    def __init__(self, input_dim, output_dim = 5):
+        super().__init__()
+
+        self.net = nn.Sequential(
+            nn.Linear(input_dim, 128),
+            nn.ReLU(),
+            nn.Linear(128, 128),
+            nn.ReLU(),
+            nn.Linear(128, output_dim)
+
+        )
+
+    def forward(self, x):
+        return self.net(x)
