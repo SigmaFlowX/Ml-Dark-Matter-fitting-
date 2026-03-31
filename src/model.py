@@ -1,0 +1,55 @@
+import numpy as np
+import torch
+from torch.utils.data import Dataset
+
+class GalaxyDataset(Dataset):
+
+    def __init__(self, file_path, n_bins = 20, r_max = 10):
+
+        data = np.load(file_path, allow_pickle=True)
+        self.dataset = data["dataset"]
+        self.n_bins = n_bins
+        self.r_bins = np.linspace(0, r_max, n_bins + 1 )
+
+
+    def compute_features(self, R, vlos):
+
+        features = []
+
+        for i in range(self.n_bins):
+            mask = ((R >= self.r_bins[i]) & (R < self.r_bins[i+1]))
+            if np.sum(mask) > 0:
+                v = vlos[mask]
+
+                features.append(np.mean(v))
+                features.append(np.std(v))
+                features.append(len(v))
+            else:
+                features += [0,0,0]
+
+        return np.array(features)
+
+
+    def __len__(self):
+        return len(self.dataset)
+
+    def __getitem__(self, idx):
+
+        g = self.dataset[idx]
+        R = g["R"]
+        vlos = g["vlos"]
+
+        x = self.compute_features(R, vlos)
+
+        y = np.array([
+            g["rho_s"],
+            g["r_s"],
+            g["a"],
+            g["beta_inf"],
+            g["r_beta"]
+        ])
+
+        return (
+            torch.tensor(x, dtype=torch.float32),
+            torch.tensor(y, dtype=torch.float32)
+        )
