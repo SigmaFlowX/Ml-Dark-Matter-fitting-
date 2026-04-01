@@ -66,7 +66,8 @@ class SimpleModel(nn.Module):
             nn.ReLU(),
             nn.Linear(128, 128),
             nn.ReLU(),
-            nn.Linear(128, output_dim)
+            nn.Linear(128, output_dim),
+            nn.Dropout(0.1),
 
         )
 
