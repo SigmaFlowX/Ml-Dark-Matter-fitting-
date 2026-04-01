@@ -2,7 +2,7 @@ import torch
 from torch.utils.data import DataLoader
 from model import GalaxyDataset
 from model import SimpleModel
-
+import matplotlib.pyplot as plt
 
 
 dataset = GalaxyDataset("train.npz")
@@ -12,6 +12,7 @@ model = SimpleModel(input_dim = 20 * 3)
 optimizer = torch.optim.Adam(model.parameters(), lr = 1e-3)
 loss_fn = torch.nn.MSELoss()
 
+losses = []
 for epoch in range(20):
 
     total_loss = 0
@@ -25,6 +26,13 @@ for epoch in range(20):
         loss.backward()
         optimizer.step()
 
+        losses.append(total_loss)
         total_loss += loss.item()
 
     print(epoch,total_loss)
+
+plt.plot(range(1, 21), losses, marker='o')
+plt.xlabel("epoch")
+plt.ylabel("Totall loss")
+plt.grid(True)
+plt.show()
