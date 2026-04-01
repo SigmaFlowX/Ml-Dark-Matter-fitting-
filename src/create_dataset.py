@@ -23,7 +23,7 @@ def generate_parameter_grid():
 
     return param_list
 
-def generate_dataset(n_stars = 500, r_grid = np.logspace(-2, 1, 120), save_path = "train.npz"):
+def generate_dataset(n_stars = 5000, r_grid = np.logspace(-2, 1, 120), save_path = "train.npz"):
 
     param_list = generate_parameter_grid()
     dataset = []
