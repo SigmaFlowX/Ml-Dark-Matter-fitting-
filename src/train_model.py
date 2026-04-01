@@ -26,9 +26,10 @@ for epoch in range(20):
         loss.backward()
         optimizer.step()
 
-        losses.append(total_loss)
+
         total_loss += loss.item()
 
+    losses.append(total_loss)
     print(epoch,total_loss)
 
 plt.plot(range(1, 21), losses, marker='o')
