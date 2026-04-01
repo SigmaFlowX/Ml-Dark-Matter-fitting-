@@ -38,7 +38,7 @@ if __name__ == "__main__":
         m0 = 5e6,
         beta_inf = 0.3,
         r_beta = 2,
-        n_stars = 100
+        n_stars = 5000
     ))
 
 
