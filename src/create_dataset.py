@@ -23,6 +23,24 @@ def generate_parameter_grid():
 
     return param_list
 
+def generate_dataset_bins(n_stars = 5000, r_grid = np.logspace(-2, 1, 120), save_path = "train.npz"):
+
+    param_list = generate_parameter_grid()
+    dataset = []
+
+    for params in tqdm(param_list):
+
+        R, v_los = create_data(r_grid = r_grid, n_stars = n_stars, **params)
+        galaxy = {
+            "R": R,
+            "vlos": v_los,
+            **params
+        }
+        dataset.append(galaxy)
+
+    np.savez_compressed(save_path, dataset = dataset)
+    print("N galaxies =", len(dataset))
+
 def generate_dataset_deepsets(n_stars = 800, r_grid = np.logspace(-2, 1, 120), save_path = "train.npz"):
 
     param_list = generate_parameter_grid()
