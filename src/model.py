@@ -5,7 +5,7 @@ import torch.nn as nn
 
 class GalaxyDataset(Dataset):
 
-    def __init__(self, file_path, n_bins = 20, r_max = 10):
+    def __init__(self, file_path, n_bins = 70, r_max = 10):
 
         data = np.load(file_path, allow_pickle=True)
         self.dataset = data["dataset"]

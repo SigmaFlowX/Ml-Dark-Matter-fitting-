@@ -6,14 +6,14 @@ import matplotlib.pyplot as plt
 
 
 dataset = GalaxyDataset("train.npz")
-loader = DataLoader(dataset, batch_size = 32, shuffle = True)
+loader = DataLoader(dataset, batch_size = 64, shuffle = True)
 
-model = SimpleModel(input_dim = 20 * 3)
+model = SimpleModel(input_dim = 70 * 3)
 optimizer = torch.optim.Adam(model.parameters(), lr = 1e-3)
 loss_fn = torch.nn.MSELoss()
 
 losses = []
-for epoch in range(20):
+for epoch in range(200):
 
     total_loss = 0
 
