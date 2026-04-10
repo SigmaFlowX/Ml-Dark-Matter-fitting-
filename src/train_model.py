@@ -1,19 +1,22 @@
 import torch
 from torch.utils.data import DataLoader
-from model import GalaxyDataset
-from model import SimpleModel
+from model import GalaxyDatasetDeepSets
+from model import DeepSetModel
 import matplotlib.pyplot as plt
+import torch
+
+print(torch.cuda.is_available())
 
 
-dataset = GalaxyDataset("train.npz")
+dataset = GalaxyDatasetDeepSets("train.npz")
 loader = DataLoader(dataset, batch_size = 64, shuffle = True)
 
-model = SimpleModel(input_dim = 70 * 3)
+model = DeepSetModel()
 optimizer = torch.optim.Adam(model.parameters(), lr = 1e-3)
 loss_fn = torch.nn.MSELoss()
 
 losses = []
-for epoch in range(200):
+for epoch in range(20):
 
     total_loss = 0
 
