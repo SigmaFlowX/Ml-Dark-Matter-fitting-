@@ -41,7 +41,7 @@ def generate_dataset_bins(n_stars = 5000, r_grid = np.logspace(-2, 1, 120), save
     np.savez_compressed(save_path, dataset = dataset)
     print("N galaxies =", len(dataset))
 
-def generate_dataset_deepsets(n_stars = 800, r_grid = np.logspace(-2, 1, 120), save_path = "train.npz"):
+def generate_dataset_deepsets(n_stars = 2000, r_grid = np.logspace(-2, 1, 120), save_path = "train.npz"):
 
     param_list = generate_parameter_grid()
 
@@ -76,4 +76,4 @@ def generate_dataset_deepsets(n_stars = 800, r_grid = np.logspace(-2, 1, 120), s
     print("N galaxies =", len(R_all))
 
 if __name__ == "__main__":
-    generate_dataset()
+    generate_dataset_deepsets()
