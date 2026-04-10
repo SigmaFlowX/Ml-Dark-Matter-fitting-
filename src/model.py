@@ -3,7 +3,7 @@ import torch
 from torch.utils.data import Dataset
 import torch.nn as nn
 
-class GalaxyDataset(Dataset):
+class GalaxyDataseBinned(Dataset):
 
     def __init__(self, file_path, n_bins = 70, r_max = 10):
 
@@ -49,6 +49,42 @@ class GalaxyDataset(Dataset):
             g["beta_inf"],
             np.log10(g["r_beta"])
 
+        ])
+
+        return (
+            torch.tensor(x, dtype=torch.float32),
+            torch.tensor(y, dtype=torch.float32)
+        )
+
+class GalaxyDatasetDeepSets(Dataset):
+
+    def __init__(self, file_path):
+
+        data = np.load(file_path)
+
+        self.R = data["R"]
+        self.vlos = data["vlos"]
+        self.params = data["params"]
+
+    def __len__(self):
+
+        return len(self.R)
+
+    def __getitem__(self, idx):
+
+        x = np.stack(
+            [self.R[idx], self.vlos[idx]],
+            axis=1
+        )
+
+        y = self.params[idx]
+
+        y = np.array([
+            np.log10(y[0]),
+            np.log10(y[1]),
+            np.log10(y[2]),
+            y[3],
+            np.log10(y[4])
         ])
 
         return (
