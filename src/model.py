@@ -109,3 +109,34 @@ class SimpleModel(nn.Module):
 
     def forward(self, x):
         return self.net(x)
+
+class DeepSetModel(nn.Module):
+
+    def __init__(self):
+
+        super().__init__()
+
+        self.phi = nn.Sequential(
+            nn.Linear(2, 64),
+            nn.ReLU(),
+            nn.Linear(64, 64),
+            nn.ReLU(),
+            nn.Linear(64, 64),
+            nn.ReLU()
+        )
+
+        self.rho = nn.Sequential(
+            nn.Linear(64, 128),
+            nn.ReLU(),
+            nn.Linear(128, 64),
+            nn.ReLU(),
+            nn.Linear(64, 5)
+        )
+
+
+    def forward(self, x):
+        features = self.phi(x)
+        pooled = features.mean(dim=1)
+
+        out = self.rho(pooled)
+        return out
